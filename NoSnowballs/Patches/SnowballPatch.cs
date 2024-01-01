@@ -2,18 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace NoSnowballs.Patches
 {
-    /// <summary>
-    /// This is an example patch, made to demonstrate how to use Harmony. You should remove it if it is not used.
-    /// </summary>
-    [HarmonyPatch(typeof(SnowballMaker))]
-    [HarmonyPatch("LateUpdate", MethodType.Normal)]
-    internal class SnowballPatch
+    [HarmonyPatch(typeof(SnowballThrowable), "EnableSnowballLocal")]
+    internal class SnowballPatch : MonoBehaviour
     {
-        private static bool Postfix()
+        public static bool Prefix(SnowballThrowable __instance)
         {
+            Debug.Log("Blocked Snowball");
             return false;
         }
     }
